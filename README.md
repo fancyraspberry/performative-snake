@@ -2,34 +2,6 @@
 
 a snake game where you are him. collect the matcha, grow your trail of culturally significant objects.
 
-## setup
-
-no build step. no npm install. no webpack. just vibes.
-
-### option 1 — local dev server (recommended)
-
-images won't load if you just double-click `index.html` because browsers block local file fetches. use a tiny server instead:
-
-```bash
-# if you have node
-npx serve .
-
-# or python
-python3 -m http.server 8000
-
-# or the VS Code "Live Server" extension (right-click index.html → Open with Live Server)
-```
-
-then open `http://localhost:8000` (or whatever port it tells you).
-
-### option 2 — deploy it
-
-drop the whole folder on any static host:
-
-- **Netlify**: drag the folder onto [netlify.com/drop](https://netlify.com/drop)
-- **Vercel**: `npx vercel` from the project root
-- **GitHub Pages**: push to a repo → Settings → Pages → Deploy from branch
-
 ## file structure
 
 ```
@@ -59,9 +31,9 @@ matcha-snake/
 all the constants are at the top of `game.js`:
 
 ```js
-const CELL       = 48;   // grid cell size in px
-const COLS       = 15;   // grid columns
-const ROWS       = 15;   // grid rows
+const CELL       = 56;   // grid cell size in px
+const COLS       = 12;   // grid columns
+const ROWS       = 12;   // grid rows
 const BASE_SPEED = 140;  // starting tick speed in ms (lower = faster)
 const MIN_SPEED  = 65;   // fastest possible speed
 const SPEED_STEP = 5;    // ms to shave off per matcha collected
