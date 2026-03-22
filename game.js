@@ -1,29 +1,29 @@
 // ─── Config ────────────────────────────────────────────────────────────────
 
-const CELL        = 48;    // px per grid cell
-const COLS        = 15;
-const ROWS        = 15;
-const BASE_SPEED  = 140;   // ms per tick (lower = faster)
-const MIN_SPEED   = 65;
-const SPEED_STEP  = 5;     // shave off per matcha collected
+const CELL = 56;    // px per grid cell
+const COLS = 12;
+const ROWS = 12;
+const BASE_SPEED = 140;   // ms per tick (lower = faster)
+const MIN_SPEED = 65;
+const SPEED_STEP = 5;     // shave off per matcha collected
 
 // ─── Canvas setup ──────────────────────────────────────────────────────────
 
-const canvas  = document.getElementById('game');
-const ctx     = canvas.getContext('2d');
-canvas.width  = COLS * CELL;
+const canvas = document.getElementById('game');
+const ctx = canvas.getContext('2d');
+canvas.width = COLS * CELL;
 canvas.height = ROWS * CELL;
 
 // ─── Asset loading ─────────────────────────────────────────────────────────
 
 const IMAGES = {};
 const IMG_SRCS = {
-  performativeMale : 'assets/performativeMale.png',
-  matcha           : 'assets/matcha.png',
-  book             : 'assets/book.png',
-  nailPolish       : 'assets/nailPolish.png',
-  toteBag          : 'assets/toteBag.png',
-  vinyl            : 'assets/vinyl.png',
+  performativeMale: 'assets/performativeMale.png',
+  matcha: 'assets/matcha.png',
+  book: 'assets/book.png',
+  nailPolish: 'assets/nailPolish.png',
+  toteBag: 'assets/toteBag.png',
+  vinyl: 'assets/vinyl.png',
 };
 
 const TAIL_ITEMS = ['book', 'nailPolish', 'toteBag', 'vinyl'];
@@ -52,11 +52,11 @@ function loadAssets(callback) {
 
 function drawBoard() {
   const LIGHT = '#d4b896';
-  const DARK  = '#8b6340';
+  const DARK = '#8b6340';
 
   // wood-grain stripe texture via thin semi-transparent lines
   const GRAIN_LIGHT = 'rgba(255,240,210,0.07)';
-  const GRAIN_DARK  = 'rgba(0,0,0,0.08)';
+  const GRAIN_DARK = 'rgba(0,0,0,0.08)';
 
   for (let r = 0; r < ROWS; r++) {
     for (let c = 0; c < COLS; c++) {
@@ -81,10 +81,10 @@ function drawBoard() {
   ctx.strokeStyle = 'rgba(60,30,10,0.18)';
   ctx.lineWidth = 0.5;
   for (let r = 0; r <= ROWS; r++) {
-    ctx.beginPath(); ctx.moveTo(0, r*CELL); ctx.lineTo(canvas.width, r*CELL); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0, r * CELL); ctx.lineTo(canvas.width, r * CELL); ctx.stroke();
   }
   for (let c = 0; c <= COLS; c++) {
-    ctx.beginPath(); ctx.moveTo(c*CELL, 0); ctx.lineTo(c*CELL, canvas.height); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(c * CELL, 0); ctx.lineTo(c * CELL, canvas.height); ctx.stroke();
   }
 }
 
@@ -105,16 +105,16 @@ function drawHead(col, row, dir) {
 
   const cx = col * CELL + CELL / 2;
   const cy = row * CELL + CELL / 2;
-  const size = CELL - 4;
+  const size = CELL - 2;
 
   ctx.save();
   ctx.translate(cx, cy);
 
   // rotate the head image based on direction so it always faces forward
-  const angle = { right: 0, left: Math.PI, up: -Math.PI/2, down: Math.PI/2 }[dir] ?? 0;
+  const angle = { right: 0, left: Math.PI, up: -Math.PI / 2, down: Math.PI / 2 }[dir] ?? 0;
   ctx.rotate(angle);
 
-  ctx.drawImage(img, -size/2, -size/2, size, size);
+  ctx.drawImage(img, -size / 2, -size / 2, size, size);
   ctx.restore();
 }
 
@@ -126,14 +126,14 @@ function initState() {
   const startCol = Math.floor(COLS / 2);
   const startRow = Math.floor(ROWS / 2);
 
-  snake   = [{ c: startCol, r: startRow }];
-  dir     = 'right';
+  snake = [{ c: startCol, r: startRow }];
+  dir = 'right';
   nextDir = 'right';
-  tail    = [];           // array of { c, r, img }
-  matcha  = spawnMatcha();
-  score   = 0;
-  speed   = BASE_SPEED;
-  alive   = true;
+  tail = [];           // array of { c, r, img }
+  matcha = spawnMatcha();
+  score = 0;
+  speed = BASE_SPEED;
+  alive = true;
 
   document.getElementById('score').textContent = '0';
 }
@@ -164,7 +164,7 @@ function tick() {
   dir = nextDir;
 
   const head = snake[0];
-  const moves = { right:{dc:1,dr:0}, left:{dc:-1,dr:0}, up:{dc:0,dr:-1}, down:{dc:0,dr:1} };
+  const moves = { right: { dc: 1, dr: 0 }, left: { dc: -1, dr: 0 }, up: { dc: 0, dr: -1 }, down: { dc: 0, dr: 1 } };
   const mv = moves[dir];
   const newHead = { c: head.c + mv.dc, r: head.r + mv.dr };
 
@@ -191,16 +191,12 @@ function tick() {
 
   // ate matcha?
   if (newHead.c === matcha.c && newHead.r === matcha.r) {
-    // grow: put a new tail item at the removed position
     tail.push({ c: removed.c, r: removed.r, img: randomTailImg() });
-    snake.push(removed);  // restore the snake segment (grows by 1)
 
-    score += 10;
+    score += 1;
     document.getElementById('score').textContent = score;
 
-    // speed up
     speed = Math.max(MIN_SPEED, speed - SPEED_STEP);
-
     matcha = spawnMatcha();
 
     clearInterval(ticker);
@@ -212,8 +208,8 @@ function tick() {
     // shift tail positions to follow snake's last segment
     const snakeTail = snake[snake.length - 1];
     for (let i = tail.length - 1; i > 0; i--) {
-      tail[i].c = tail[i-1].c;
-      tail[i].r = tail[i-1].r;
+      tail[i].c = tail[i - 1].c;
+      tail[i].r = tail[i - 1].r;
     }
     tail[0].c = removed.c;
     tail[0].r = removed.r;
@@ -228,14 +224,14 @@ function render() {
 
   // draw tail items
   for (const seg of tail) {
-    drawImg(seg.img, seg.c, seg.r, 5);
+    drawImg(seg.img, seg.c, seg.r, 2);
   }
 
   // draw head (last in draw order = on top)
   drawHead(snake[0].c, snake[0].r, dir);
 
   // draw matcha
-  drawImg('matcha', matcha.c, matcha.r, 4);
+  drawImg('matcha', matcha.c, matcha.r, 2);
 }
 
 // ─── Start / End ───────────────────────────────────────────────────────────
@@ -276,7 +272,7 @@ const KEY_MAP = {
   W: 'up', S: 'down', A: 'left', D: 'right',
 };
 
-const OPPOSITES = { up:'down', down:'up', left:'right', right:'left' };
+const OPPOSITES = { up: 'down', down: 'up', left: 'right', right: 'left' };
 
 document.addEventListener('keydown', e => {
   const d = KEY_MAP[e.key];
