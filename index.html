@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>performative male</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <div id="hud">
+      <div class="hud-item">
+        <span class="hud-label">score</span>
+        <span class="hud-value" id="score">0</span>
+      </div>
+      <div class="hud-title">performative male</div>
+      <div class="hud-item right">
+        <span class="hud-label">best</span>
+        <span class="hud-value" id="best">0</span>
+      </div>
+    </div>
+
+    <div id="canvas-wrap">
+      <canvas id="game"></canvas>
+
+      <div id="overlay" class="visible">
+        <div class="overlay-inner">
+          <h1>performative<br>male</h1>
+          <p>collect the matcha.<br>grow the trail.</p>
+          <div class="key-hint">← → ↑ ↓ &nbsp;or&nbsp; wasd</div>
+          <button id="startBtn">start</button>
+        </div>
+      </div>
+
+      <div id="gameover" class="hidden">
+        <div class="overlay-inner">
+          <h2>very demure,<br>very mindful</h2>
+          <p id="final-score"></p>
+          <button id="restartBtn">again</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
