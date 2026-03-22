@@ -30,6 +30,10 @@ body {
 }
 
 #app {
+  transform-origin: top center;
+}
+
+#app {
   display: flex;
   flex-direction: column;
   align-items: center;

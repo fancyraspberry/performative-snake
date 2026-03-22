@@ -293,3 +293,16 @@ loadAssets(() => {
   // draw the board behind the overlay while waiting to start
   drawBoard();
 });
+
+function scaleToFit() {
+  const app = document.getElementById('app');
+  const availH = window.innerHeight;
+  const availW = window.innerWidth;
+  const naturalH = app.scrollHeight;
+  const naturalW = app.scrollWidth;
+  const scale = Math.min(1, availW / naturalW, availH / naturalH) * 0.94;
+  app.style.transform = `scale(${scale})`;
+}
+
+scaleToFit();
+window.addEventListener('resize', scaleToFit);
