@@ -3,7 +3,7 @@
 const CELL = 56;    // px per grid cell
 const COLS = 12;
 const ROWS = 12;
-const BASE_SPEED = 140;   // ms per tick (lower = faster)
+const BASE_SPEED = 200;   // ms per tick (lower = faster)
 const MIN_SPEED = 65;
 const SPEED_STEP = 5;     // shave off per matcha collected
 
