@@ -193,3 +193,49 @@ button:hover {
   background: var(--brown);
   color: var(--dark);
 }
+
+#dpad {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-top: 12px;
+}
+
+.dpad-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dpad-btn {
+  width: 52px;
+  height: 52px;
+  font-size: 20px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: 1px solid var(--brown);
+  background: rgba(139, 99, 64, 0.15);
+  color: var(--beige);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.dpad-btn:active {
+  background: var(--brown);
+  color: var(--dark);
+}
+
+.dpad-center {
+  width: 52px;
+  height: 52px;
+}
+
+@media (pointer: coarse) {
+  #dpad { display: flex; }
+  #controls { display: none; }
+}

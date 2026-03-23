@@ -285,6 +285,48 @@ document.addEventListener('keydown', e => {
 document.getElementById('startBtn').addEventListener('click', startGame);
 document.getElementById('restartBtn').addEventListener('click', startGame);
 
+// ─── Touch / Swipe ─────────────────────────────────────────────────────────
+
+let touchStartX = 0;
+let touchStartY = 0;
+
+document.addEventListener('touchstart', e => {
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+}, { passive: true });
+
+document.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  const dy = e.changedTouches[0].clientY - touchStartY;
+  if (Math.abs(dx) < 10 && Math.abs(dy) < 10) return; // tap, not swipe
+
+  let swipeDir;
+  if (Math.abs(dx) > Math.abs(dy)) {
+    swipeDir = dx > 0 ? 'right' : 'left';
+  } else {
+    swipeDir = dy > 0 ? 'down' : 'up';
+  }
+
+  if (swipeDir === OPPOSITES[dir]) return;
+  nextDir = swipeDir;
+}, { passive: true });
+
+document.addEventListener('touchmove', e => {
+  e.preventDefault();
+}, { passive: false });
+
+// ─── D-pad buttons ─────────────────────────────────────────────────────────
+
+['up','down','left','right'].forEach(d => {
+  const btn = document.getElementById(`btn-${d}`);
+  if (!btn) return;
+  btn.addEventListener('touchstart', e => {
+    e.preventDefault();
+    if (d === OPPOSITES[dir]) return;
+    nextDir = d;
+  }, { passive: false });
+});
+
 // ─── Boot ──────────────────────────────────────────────────────────────────
 
 best = 0;
