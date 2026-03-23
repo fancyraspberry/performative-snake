@@ -5,7 +5,7 @@ const COLS = 12;
 const ROWS = 12;
 const BASE_SPEED = 200;   // ms per tick (lower = faster)
 const MIN_SPEED = 65;
-const SPEED_STEP = 5;     // shave off per matcha collected
+const SPEED_STEP = 2;     // shave off per matcha collected
 
 // ─── Canvas setup ──────────────────────────────────────────────────────────
 
