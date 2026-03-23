@@ -315,17 +315,7 @@ document.addEventListener('touchmove', e => {
   e.preventDefault();
 }, { passive: false });
 
-// ─── D-pad buttons ─────────────────────────────────────────────────────────
 
-['up','down','left','right'].forEach(d => {
-  const btn = document.getElementById(`btn-${d}`);
-  if (!btn) return;
-  btn.addEventListener('touchstart', e => {
-    e.preventDefault();
-    if (d === OPPOSITES[dir]) return;
-    nextDir = d;
-  }, { passive: false });
-});
 
 // ─── Boot ──────────────────────────────────────────────────────────────────
 
